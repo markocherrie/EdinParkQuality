@@ -1,0 +1,78 @@
+library(sf)
+library(geobr)
+library(mapview)
+library(ggplot2)
+library(gridExtra)
+library(randomcoloR)
+
+
+parksfromedinburghcouncil<-read_sf("geo/Open_Space_Audit_2016.shp")
+
+library(ggplot2)
+library(dplyr)
+
+
+premsub<-parksfromedinburghcouncil %>%
+  dplyr::filter(PAN65=="Public Parks & Gardens") %>%
+  dplyr::filter(NP_Name=="City Centre NP")
+
+premsub$NAME[premsub$NAME=="The Meadows amd Bruntsfield Links"]<-"Bruntsfield Links"
+premsub$NAME[premsub$NAME=="The Meadows and Bruntsfield Links"]<-"The Meadows"
+
+
+premsub<-premsub[!duplicated(premsub$NAME),]
+
+
+# not getting distinct
+
+
+nrow(premsub)
+library(ggpubr)
+
+range01 <- function(x){(x-min(x))/(max(x)-min(x))}
+premsub$scale<-(range01(premsub$Area_ha)+0.01)*2
+
+######################
+wrapper <- function(x, ...) 
+{
+  paste(strwrap(x, ...), collapse = "\n")
+}
+#################
+premsubtop <- premsub %>% arrange(Area_ha) %>% top_n(5)
+premsubbottom <- premsub %>% arrange(Area_ha) %>% top_n(-5)
+premsub <- premsub %>% arrange(Area_ha) 
+
+cowplotter<-function(data, padding){
+premsub<-data
+premsub$centroid <- 
+  premsub %>%
+  sf::st_centroid() %>%
+  sf::st_geometry() %>%
+  sf::st_transform(27700)
+
+padding <-padding
+graph <- function(x){
+    ggplot(data = filter(premsub[x,])) + 
+    geom_sf(fill="lightgreen")+
+    #geom_sf(data =premsub[x,]$centroid)+
+    coord_sf(xlim = c(premsub$centroid[[x]][1]-padding , 
+                      premsub$centroid[[x]][1]+padding), 
+             ylim = c(premsub$centroid[[x]][2]-padding , 
+                      premsub$centroid[[x]][2]+padding), 
+             expand = FALSE)+
+    theme_void()+
+    theme(legend.position="none")+
+    ggtitle(wrapper(premsub$NAME[x], width = 18))
+    
+}
+
+plot_list <- lapply(X = 1:nrow(premsub), FUN = graph)
+
+g <- cowplot::plot_grid(plotlist = plot_list, ncol = 3)
+g
+}
+
+cowplotter(premsubtop, 450)
+cowplotter(premsubbottom, 450)
+cowplotter(premsub, 450)
+

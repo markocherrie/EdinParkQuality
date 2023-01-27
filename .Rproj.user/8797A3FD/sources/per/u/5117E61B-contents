@@ -1,0 +1,2 @@
+# fitbitr
+devtools::install_github("teramonagi/fitbitr")
