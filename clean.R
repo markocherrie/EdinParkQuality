@@ -44,12 +44,6 @@ procdata$Scorechange<-procdata$Score2021-procdata$Score2014
 # geocode the data and then see which park they fall in using the os map
 
 library(ggmap)
-#register_google(key = "AIzaSyDTjQcTOp_zYu_EbqPGnc5_Rkt8U97ODO8", write = TRUE)
-
-#procdata$Name<-paste0(procdata$Name, " , Edinburgh, Scotland")
-#addr.geo <- mutate_geocode(procdata, location = Name, output = "latlona")
-#library(mapview)
-#mapview(addr.geo, xcol = "lon", ycol = "lat", crs = 4269, grid = FALSE)
 
 
 addr.geo$lat[addr.geo$Name=="Whinhill Park       , Edinburgh, Scotland"]<-55.927589
