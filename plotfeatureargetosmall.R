@@ -16,10 +16,15 @@ showtext_auto()
 
 parksfromedinburghcouncil<-read_sf("geo/Open_Space_Audit_2016.shp")
 
+parksfromedinburghcouncil$NP_Name[parksfromedinburghcouncil$NP_Name=="Almond"]<-"Almond NP"
+parksfromedinburghcouncil$NP_Name[parksfromedinburghcouncil$NP_Name=="Portobello / Craigmillar NP"]<-"Portobello/Craigmillar NP"
+parksfromedinburghcouncil$NP_Name[parksfromedinburghcouncil$NP_Name=="Craigentinny / Duddingston NP"]<-"Craigentinny/Duddingston NP"
+parksfromedinburghcouncil$NP_Name[parksfromedinburghcouncil$NP_Name=="City Centre"]<-"City Centre NP"
+
+
 
 # function
-wrapper <- function(x, ...) 
-{
+wrapper <- function(x, ...) {
   paste(strwrap(x, ...), collapse = "\n")
 }
 
@@ -91,7 +96,30 @@ cowplotter<-function(data, pan, np, n, padding, size){
 
 
 
-cowplotter(parksfromedinburghcouncil, "Public Parks & Gardens","City Centre NP", 5, 450,  size="diff")
+cowplotter(parksfromedinburghcouncil, "Public Parks & Gardens","City Centre NP", 5, 450,  size="same")
+cowplotter(parksfromedinburghcouncil, "Public Parks & Gardens","Forth NP", 5, 450,  size="same")
+cowplotter(parksfromedinburghcouncil, "Public Parks & Gardens","Inverleith NP", 5, 450,  size="same")
+cowplotter(parksfromedinburghcouncil, "Public Parks & Gardens","South Central NP", 5, 450,  size="same")
+cowplotter(parksfromedinburghcouncil, "Public Parks & Gardens","Almond NP", 5, 450,  size="same")
+cowplotter(parksfromedinburghcouncil, "Public Parks & Gardens","South West NP", 5, 450,  size="same")
+cowplotter(parksfromedinburghcouncil, "Public Parks & Gardens","Western Edinburgh NP", 5, 450,  size="same")
+cowplotter(parksfromedinburghcouncil, "Public Parks & Gardens","Liberton/Gilmerton NP", 5, 450,  size="same")
+cowplotter(parksfromedinburghcouncil, "Public Parks & Gardens","Portobello/Craigmillar NP", 5, 450,  size="same")
+cowplotter(parksfromedinburghcouncil, "Public Parks & Gardens","Pentlands NP", 5, 450,  size="same")
+cowplotter(parksfromedinburghcouncil, "Public Parks & Gardens","Craigentinny/Duddingston NP", 5, 450,  size="same")
+cowplotter(parksfromedinburghcouncil, "Public Parks & Gardens","Leith NP", 5, 450,  size="same")
+
+
+#cowplotter(parksfromedinburghcouncil, "Public Parks & Gardens","City Centre", 5, 450,  size="diff")
+#cowplotter(parksfromedinburghcouncil, "Public Parks & Gardens","Almond", 5, 450,  size="diff")
+#cowplotter(parksfromedinburghcouncil, "Public Parks & Gardens",`Portobello / Craigmillar NP`, 5, 450,  size="diff")
+#
+
+
+
+
+
+
 cowplotter(parksfromedinburghcouncil, "Public Parks & Gardens","Pentlands NP", 5, 450,  size="same")
 
 cowplotter(parksfromedinburghcouncil, "Public Parks & Gardens","Pentlands NP", 5, 300,  size="diff")
