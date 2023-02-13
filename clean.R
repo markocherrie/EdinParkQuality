@@ -54,7 +54,7 @@ addr.geo$lon[addr.geo$Name=="Marchbank Park       , Edinburgh, Scotland"]<--3.34
 
 
 
-write.csv(addr.geo, "data/EdinParkQuality_rawdata2014_2.csv")
+#write.csv(addr.geo, "data/EdinParkQuality_rawdata2014_2.csv")
 
 
 # mre detailed data for 2021 at end of report here: https://www.edinburgh.gov.uk/downloads/file/30233/parks-quality-report-2021
